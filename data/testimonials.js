@@ -1,0 +1,88 @@
+export const testimonials = [
+  {
+    id: 1,
+    name: 'Mohammad Ashraf',
+    role: 'Python Developer at TechStart',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
+    rating: 5,
+    course: 'Python Programming',
+    content: 'ABC Computronics changed my life! I came with zero programming knowledge and now I am working as a Python developer. The instructors are patient and the course content is excellent. Highly recommended for anyone wanting to start a tech career.',
+    featured: true,
+  },
+  {
+    id: 2,
+    name: 'Fatima Bano',
+    role: 'Freelance Web Developer',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80',
+    rating: 5,
+    course: 'Web Development Basics',
+    content: 'The web development course was exactly what I needed. Now I build websites for local businesses and earn a good income working from home. The practical approach and project-based learning made all the difference.',
+    featured: true,
+  },
+  {
+    id: 3,
+    name: 'Bilal Ahmad Dar',
+    role: 'Junior Software Engineer',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80',
+    rating: 5,
+    course: 'Software Development Fundamentals',
+    content: 'I was hesitant about starting a tech career at 28, but the team at ABC Computronics made it possible. The software development course gave me a strong foundation, and within 6 months of completing the course, I got my first job!',
+    featured: true,
+  },
+  {
+    id: 4,
+    name: 'Sameera Wani',
+    role: 'Professional Tailor & Boutique Owner',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80',
+    rating: 5,
+    course: 'Cutting and Tailoring',
+    content: 'The tailoring course helped me upgrade my skills and start my own boutique. Shabnam Ma\'am is an amazing teacher who shares all her expertise. Now I have regular clients and a growing business.',
+    featured: false,
+  },
+  {
+    id: 5,
+    name: 'Nazir Ahmad Khan',
+    role: 'IT Support Specialist',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80',
+    rating: 4,
+    course: 'Soft Skills for Tech Professionals',
+    content: 'Even though I had technical skills, I was struggling in interviews. The soft skills course taught me how to communicate effectively and present myself professionally. I finally cleared interviews at multiple companies!',
+    featured: false,
+  },
+  {
+    id: 6,
+    name: 'Ruqayya Akhtar',
+    role: 'Professional Mehndi Artist',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80',
+    rating: 5,
+    course: 'Mehndi Art',
+    content: 'I always loved applying mehndi but learning proper techniques and designs took my skill to another level. Now I am a sought-after bridal mehndi artist with bookings throughout the wedding season!',
+    featured: false,
+  },
+  {
+    id: 7,
+    name: 'Ishfaq Ahmad Lone',
+    role: 'Frontend Developer',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
+    rating: 5,
+    course: 'Web Development Basics',
+    content: 'Started the course during lockdown and it was the best decision ever. The online sessions were well organized, and I could learn at my own pace. Now working remotely for a company in Bangalore!',
+    featured: false,
+  },
+  {
+    id: 8,
+    name: 'Zainab Malik',
+    role: 'Fashion Design Student',
+    avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=80',
+    rating: 5,
+    course: 'Fashion Designing',
+    content: 'The fashion designing course opened doors I never knew existed. Aisha Ma\'am is incredibly talented and supportive. I am now preparing for admission to NIFT and feel confident about my portfolio.',
+    featured: false,
+  },
+];
+
+export const getFeaturedTestimonials = () => testimonials.filter((t) => t.featured);
+export const getTestimonialsByCourse = (courseId) =>
+  testimonials.filter((t) => t.course === courseId);
+
+export default testimonials;

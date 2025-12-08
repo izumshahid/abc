@@ -1,26 +1,343 @@
 @import "tailwindcss";
 
 :root {
+  /* Light theme colors - inspired by the green/cream brand colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
+  --primary: #1a4d3e;
+  --primary-light: #2d6a5a;
+  --primary-dark: #0f3228;
+  --secondary: #d4a853;
+  --secondary-light: #e8c67a;
+  --accent: #f5e6c8;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --text-muted: #6b7280;
+  --hero-overlay: rgba(26, 77, 62, 0.85);
+}
+
+[data-theme="dark"] {
+  --background: #0f1a17;
+  --foreground: #f5f5f5;
+  --primary: #2d6a5a;
+  --primary-light: #3d8a75;
+  --primary-dark: #1a4d3e;
+  --secondary: #e8c67a;
+  --secondary-light: #f0d899;
+  --accent: #2a3d35;
+  --card-bg: #1a2922;
+  --card-border: #2d4a3d;
+  --text-muted: #9ca3af;
+  --hero-overlay: rgba(15, 26, 23, 0.9);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-accent: var(--accent);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-text-muted: var(--text-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --background: #0f1a17;
+    --foreground: #f5f5f5;
+    --primary: #2d6a5a;
+    --primary-light: #3d8a75;
+    --primary-dark: #1a4d3e;
+    --secondary: #e8c67a;
+    --secondary-light: #f0d899;
+    --accent: #2a3d35;
+    --card-bg: #1a2922;
+    --card-border: #2d4a3d;
+    --text-muted: #9ca3af;
+    --hero-overlay: rgba(15, 26, 23, 0.9);
   }
+}
+
+* {
+  box-sizing: border-box;
+  /* margin: 0;
+  padding: 0; */
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+}
+
+/* Ant Design theme overrides */
+.ant-btn-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--primary-light) !important;
+  border-color: var(--primary-light) !important;
+}
+
+[data-theme="dark"] .ant-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+}
+
+[data-theme="dark"] .ant-modal-content {
+  background-color: var(--card-bg) !important;
+}
+
+[data-theme="dark"] .ant-modal-header {
+  background-color: var(--card-bg) !important;
+}
+
+[data-theme="dark"] .ant-modal-title {
+  color: var(--foreground) !important;
+}
+
+[data-theme="dark"] .ant-form-item-label > label {
+  color: var(--foreground) !important;
+}
+
+[data-theme="dark"] .ant-input,
+[data-theme="dark"] .ant-select-selector,
+[data-theme="dark"] .ant-picker {
+  background-color: var(--accent) !important;
+  border-color: var(--card-border) !important;
+  color: var(--foreground) !important;
+}
+
+[data-theme="dark"] .ant-input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Swiper customization */
+.swiper-pagination-bullet {
+  background-color: var(--secondary) !important;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--secondary) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Section spacing */
+.section {
+  padding: 5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 7rem 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 8rem 3rem;
+  }
+}
+
+/* Container */
+.container-custom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding: 0 2.5rem;
+  }
+}
+
+/* Section badges */
+.section-badge {
+  display: inline-block;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Card spacing improvements */
+.ant-card {
+  margin-bottom: 1.5rem;
+}
+
+.ant-card-body {
+  padding: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .ant-card-body {
+    padding: 2rem !important;
+  }
+}
+
+/* Image spacing */
+img {
+  margin-bottom: 1.5rem;
+}
+
+/* List spacing */
+ul,
+ol {
+  /* padding-left: 1.5rem; */
+  margin-bottom: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+}
+
+/* Cursor pointer for all interactive elements */
+a,
+button,
+[role="button"],
+[type="button"],
+[type="submit"],
+[type="reset"],
+.ant-btn,
+.ant-card-hoverable,
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-pagination-bullet,
+[onclick],
+label[for] {
+  cursor: pointer !important;
+}
+
+/* Ensure Next.js Link components have pointer cursor */
+a:not([disabled]) {
+  cursor: pointer;
+}
+
+/* Ant Design specific cursor fixes */
+.ant-btn:not([disabled]),
+.ant-segmented-item,
+.ant-menu-item,
+.ant-dropdown-menu-item,
+.ant-pagination-item,
+.ant-select-selector,
+.ant-checkbox-wrapper,
+.ant-radio-wrapper,
+.ant-switch {
+  cursor: pointer !important;
 }
