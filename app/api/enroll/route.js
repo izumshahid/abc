@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Enrollment from '@/models/Enrollment';
-import { sendUserConfirmationEmail, sendAdminNotificationEmail } from '@/lib/sendgrid';
+import { sendUserConfirmationEmail, sendAdminNotificationEmail } from '@/lib/mailer';
 
 export async function POST(request) {
   try {
