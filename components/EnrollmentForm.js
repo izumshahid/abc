@@ -187,8 +187,8 @@ export default function EnrollmentForm({
           <span style={{ color: "var(--foreground)" }}>Select Course(s)</span>
         }
         rules={[
-          { required: true, message: "Please select at least one course" },
           {
+            required: true,
             type: "array",
             min: 1,
             message: "Please select at least one course",
