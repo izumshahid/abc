@@ -59,27 +59,19 @@ export async function POST(request) {
 
     console.log('✅ Enrollment saved to database:', enrollment._id);
 
-    // Only send emails after confirming DB save was successful
+    // Only send admin notification email (user confirmation paused until domain verification)
     // Send asynchronously (don't wait for completion to avoid delays)
-    Promise.all([
-      sendUserConfirmationEmail({
-        name,
-        email,
-        courses,
-        startDate,
-      }),
-      sendAdminNotificationEmail({
-        name,
-        email,
-        phone,
-        courses,
-        startDate,
-        message,
-      }),
-    ]).then(([userEmailSent, adminEmailSent]) => {
-      console.log('📧 Emails sent - User:', userEmailSent ? '✅' : '❌', 'Admin:', adminEmailSent ? '✅' : '❌');
+    sendAdminNotificationEmail({
+      name,
+      email,
+      phone,
+      courses,
+      startDate,
+      message,
+    }).then((adminEmailSent) => {
+      console.log('📧 Admin notification email:', adminEmailSent ? '✅ Sent' : '❌ Failed');
     }).catch((error) => {
-      console.error('❌ Error sending emails (enrollment still saved):', error);
+      console.error('❌ Error sending admin email (enrollment still saved):', error);
       // Note: Enrollment is already saved, so this is a non-critical error
     });
 
