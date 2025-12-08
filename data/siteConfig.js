@@ -7,7 +7,7 @@ export const siteConfig = {
   url: "https://abccomputronics.com",
   logo: "/logo.png",
   contact: {
-    phone: "+91 9876543210",
+    phone: "+919797120541",
     email: "info@abccomputronics.com",
     address: "Main Market Road, Srinagar, Kashmir, India - 190001",
     workingHours: "Mon - Sat: 9:00 AM - 6:00 PM",
@@ -18,7 +18,7 @@ export const siteConfig = {
     twitter: "https://twitter.com/abccomputronics",
     linkedin: "https://linkedin.com/company/abccomputronics",
     youtube: "https://youtube.com/@abccomputronics",
-    whatsapp: "https://wa.me/919876543210",
+    whatsapp: "https://wa.me/919797120541",
   },
   seo: {
     home: {
