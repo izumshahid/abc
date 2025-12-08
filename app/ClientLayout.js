@@ -4,7 +4,6 @@ import { ConfigProvider, App } from 'antd';
 import { ThemeProvider } from '@/lib/ThemeContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import CookieConsent from '@/components/CookieConsent';
 import { StructuredData } from '@/components/SEOHead';
 
 const antdTheme = {
@@ -38,7 +37,6 @@ export default function ClientLayout({ children }) {
             {children}
           </main>
           <Footer />
-          <CookieConsent />
         </App>
       </ConfigProvider>
     </ThemeProvider>

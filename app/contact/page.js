@@ -147,7 +147,7 @@ export default function ContactPage() {
                 </div>
               </Card>
 
-              {/* Map Placeholder */}
+              {/* Location Map */}
               <div className="mt-8">
                 <h3
                   className="text-lg font-semibold mb-4"
@@ -155,29 +155,27 @@ export default function ContactPage() {
                 >
                   Find Us
                 </h3>
-                <div
-                  className="h-64 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: 'var(--accent)' }}
-                >
-                  <div className="text-center">
-                    <EnvironmentOutlined
-                      className="text-4xl mb-2"
-                      style={{ color: 'var(--primary)' }}
-                    />
-                    <p style={{ color: 'var(--text-muted)' }}>
-                      Main Market Road, Srinagar, Kashmir
-                    </p>
-                    <a
-                      href={`https://maps.google.com/?q=${encodeURIComponent(siteConfig.contact.address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm hover:underline"
-                      style={{ color: 'var(--primary)' }}
-                    >
-                      Open in Google Maps
-                    </a>
-                  </div>
+                <div className="h-64 rounded-lg overflow-hidden border" style={{ borderColor: 'var(--card-border)' }}>
+                  <iframe
+                    src="https://www.google.com/maps?q=34.086208,74.7966629&hl=en&z=15&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="ABC Computronics Location Map"
+                  ></iframe>
                 </div>
+                <a
+                  href="https://www.google.com/maps/place/Shri+Maharaja+Hari+Singh+Hospital/@34.086208,74.7966629"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm hover:underline mt-2 inline-block"
+                  style={{ color: 'var(--primary)' }}
+                >
+                  Open in Google Maps →
+                </a>
               </div>
             </div>
 
