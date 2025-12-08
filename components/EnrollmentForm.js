@@ -25,7 +25,6 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
     setLoading(true);
 
     try {
-      // In production, replace with actual API endpoint
       const response = await fetch('/api/enroll', {
         method: 'POST',
         headers: {
@@ -37,17 +36,35 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
         }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
+        message.success('Enrollment submitted successfully!');
         setSuccess(true);
         form.resetFields();
       } else {
-        throw new Error('Failed to submit');
+        // Handle error responses
+        const errorMessage = data.error || 'Failed to submit enrollment';
+        message.error(errorMessage);
+
+        // Show field-level errors if available
+        if (data.details && Array.isArray(data.details)) {
+          // If details is an array of error messages
+          const fieldErrors = data.details.map((msg, index) => ({
+            name: ['general'],
+            errors: [msg],
+          }));
+          form.setFields(fieldErrors);
+        } else if (data.fieldErrors) {
+          // If specific field errors are provided
+          form.setFields(data.fieldErrors);
+        }
+
+        console.error('Enrollment error:', data);
       }
     } catch (error) {
-      // For demo purposes, show success anyway
-      // In production, handle errors appropriately
-      setSuccess(true);
-      form.resetFields();
+      message.error('Network error. Please check your connection and try again.');
+      console.error('Enrollment submission error:', error);
     } finally {
       setLoading(false);
     }
@@ -64,10 +81,16 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
       form={form}
       layout="vertical"
       onFinish={handleSubmit}
+      onFinishFailed={(errorInfo) => {
+        message.error('Please fill in all required fields correctly');
+        console.log('Form validation failed:', errorInfo);
+      }}
       initialValues={{
-        course: preSelectedCourse?.id,
+        courses: preSelectedCourse?.id ? [preSelectedCourse.id] : [],
       }}
       className="max-w-lg mx-auto"
+      validateTrigger={['onChange', 'onBlur']}
+      scrollToFirstError
     >
       {/* Honeypot field - hidden from users */}
       <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
@@ -88,6 +111,7 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
           { required: true, message: 'Please enter your name' },
           { min: 2, message: 'Name must be at least 2 characters' },
         ]}
+        hasFeedback
       >
         <Input
           placeholder="Enter your full name"
@@ -103,6 +127,7 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
           { required: true, message: 'Please enter your email' },
           { type: 'email', message: 'Please enter a valid email' },
         ]}
+        hasFeedback
       >
         <Input
           placeholder="Enter your email"
@@ -118,6 +143,7 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
           { required: true, message: 'Please enter your phone number' },
           { pattern: /^[0-9+\-\s()]+$/, message: 'Please enter a valid phone number' },
         ]}
+        hasFeedback
       >
         <Input
           placeholder="Enter your phone number"
@@ -127,14 +153,20 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
       </Form.Item>
 
       <Form.Item
-        name="course"
-        label={<span style={{ color: 'var(--foreground)' }}>Select Course</span>}
-        rules={[{ required: true, message: 'Please select a course' }]}
+        name="courses"
+        label={<span style={{ color: 'var(--foreground)' }}>Select Course(s)</span>}
+        rules={[
+          { required: true, message: 'Please select at least one course' },
+          { type: 'array', min: 1, message: 'Please select at least one course' }
+        ]}
+        hasFeedback
       >
         <Select
-          placeholder="Choose a course"
+          mode="multiple"
+          placeholder="Choose one or more courses"
           size="large"
           style={{ width: '100%' }}
+          maxTagCount="responsive"
         >
           {courses.map((course) => (
             <Option key={course.id} value={course.id}>
@@ -224,7 +256,7 @@ export default function EnrollmentForm({ preSelectedCourse, visible, onClose }) 
         title={
           !success && (
             <span style={{ color: 'var(--foreground)' }}>
-              Enroll in {preSelectedCourse?.title || 'a Course'}
+              {preSelectedCourse ? `Enroll in ${preSelectedCourse.title}` : 'Course Enrollment'}
             </span>
           )
         }
