@@ -98,7 +98,6 @@ export default function EnrollmentForm({
       onFinish={handleSubmit}
       onFinishFailed={(errorInfo) => {
         message.error("Please fill in all required fields correctly");
-        console.log("Form validation failed:", errorInfo);
       }}
       initialValues={{
         courses: preSelectedCourse?.id ? [preSelectedCourse.id] : [],

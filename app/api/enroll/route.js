@@ -1,7 +1,10 @@
-import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import Enrollment from '@/models/Enrollment';
-import { sendUserConfirmationEmail, sendAdminNotificationEmail } from '@/lib/mailer';
+import { NextResponse } from "next/server";
+import connectDB from "@/lib/mongodb";
+import Enrollment from "@/models/Enrollment";
+import {
+  sendUserConfirmationEmail,
+  sendAdminNotificationEmail,
+} from "@/lib/mailer";
 
 export async function POST(request) {
   try {
@@ -16,13 +19,16 @@ export async function POST(request) {
     if (!name || !email || !phone || !courses) {
       return NextResponse.json(
         {
-          error: 'Missing required fields',
+          error: "Missing required fields",
           fieldErrors: [
-            !name && { name: ['name'], errors: ['Name is required'] },
-            !email && { name: ['email'], errors: ['Email is required'] },
-            !phone && { name: ['phone'], errors: ['Phone number is required'] },
-            !courses && { name: ['courses'], errors: ['Please select at least one course'] },
-          ].filter(Boolean)
+            !name && { name: ["name"], errors: ["Name is required"] },
+            !email && { name: ["email"], errors: ["Email is required"] },
+            !phone && { name: ["phone"], errors: ["Phone number is required"] },
+            !courses && {
+              name: ["courses"],
+              errors: ["Please select at least one course"],
+            },
+          ].filter(Boolean),
         },
         { status: 400 }
       );
@@ -32,10 +38,13 @@ export async function POST(request) {
     if (!Array.isArray(courses) || courses.length === 0) {
       return NextResponse.json(
         {
-          error: 'Please select at least one course',
+          error: "Please select at least one course",
           fieldErrors: [
-            { name: ['courses'], errors: ['Please select at least one course'] }
-          ]
+            {
+              name: ["courses"],
+              errors: ["Please select at least one course"],
+            },
+          ],
         },
         { status: 400 }
       );
@@ -48,16 +57,14 @@ export async function POST(request) {
       phone,
       courses,
       startDate: startDate || null,
-      message: message || '',
-      status: 'pending',
+      message: message || "",
+      status: "pending",
     });
 
     // Verify enrollment was saved successfully
     if (!enrollment || !enrollment._id) {
-      throw new Error('Failed to save enrollment to database');
+      throw new Error("Failed to save enrollment to database");
     }
-
-    console.log('✅ Enrollment saved to database:', enrollment._id);
 
     // Only send admin notification email (user confirmation paused until domain verification)
     // Send asynchronously (don't wait for completion to avoid delays)
@@ -68,30 +75,38 @@ export async function POST(request) {
       courses,
       startDate,
       message,
-    }).then((adminEmailSent) => {
-      console.log('📧 Admin notification email:', adminEmailSent ? '✅ Sent' : '❌ Failed');
-    }).catch((error) => {
-      console.error('❌ Error sending admin email (enrollment still saved):', error);
-      // Note: Enrollment is already saved, so this is a non-critical error
-    });
+    })
+      .then((adminEmailSent) => {
+        console.log(
+          "📧 Admin notification email:",
+          adminEmailSent ? "✅ Sent" : "❌ Failed"
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "❌ Error sending admin email (enrollment still saved):",
+          error
+        );
+        // Note: Enrollment is already saved, so this is a non-critical error
+      });
 
     // Return success response
     return NextResponse.json(
       {
         success: true,
-        message: 'Enrollment submitted successfully',
+        message: "Enrollment submitted successfully",
         enrollmentId: enrollment._id,
       },
       { status: 201 }
     );
   } catch (error) {
-    console.error('❌ Enrollment error:', error);
+    console.error("❌ Enrollment error:", error);
 
     // Handle validation errors
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       const messages = Object.values(error.errors).map((err) => err.message);
       return NextResponse.json(
-        { error: 'Validation failed', details: messages },
+        { error: "Validation failed", details: messages },
         { status: 400 }
       );
     }
@@ -99,14 +114,14 @@ export async function POST(request) {
     // Handle duplicate email (if you add unique constraint)
     if (error.code === 11000) {
       return NextResponse.json(
-        { error: 'An enrollment with this email already exists' },
+        { error: "An enrollment with this email already exists" },
         { status: 409 }
       );
     }
 
     // Generic error
     return NextResponse.json(
-      { error: 'Failed to submit enrollment', details: error.message },
+      { error: "Failed to submit enrollment", details: error.message },
       { status: 500 }
     );
   }
@@ -119,8 +134,8 @@ export async function GET(request) {
 
     // Get query parameters
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const limit = parseInt(searchParams.get('limit') || '50');
+    const status = searchParams.get("status");
+    const limit = parseInt(searchParams.get("limit") || "50");
 
     // Build query
     const query = status ? { status } : {};
@@ -137,9 +152,9 @@ export async function GET(request) {
       enrollments,
     });
   } catch (error) {
-    console.error('❌ Error fetching enrollments:', error);
+    console.error("❌ Error fetching enrollments:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch enrollments' },
+      { error: "Failed to fetch enrollments" },
       { status: 500 }
     );
   }
