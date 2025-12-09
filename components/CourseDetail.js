@@ -12,6 +12,7 @@ import {
   SafetyCertificateOutlined,
   GlobalOutlined,
 } from "@ant-design/icons";
+import { urlFor } from "@/lib/sanity.client";
 
 export default function CourseDetail({ course, visible, onClose, onEnroll }) {
   if (!course) return null;
@@ -139,7 +140,11 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
       children: (
         <div className="flex flex-col sm:flex-row items-start gap-4">
           <Avatar
-            src={course.instructor?.image}
+            src={
+              course.instructor?.image?.asset
+                ? urlFor(course.instructor.image).width(200).height(200).url()
+                : course.instructor?.image
+            }
             size={100}
             icon={<UserOutlined />}
             className="shrink-0"
@@ -177,12 +182,18 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
     >
       {/* Header Image */}
       <div className="relative h-48 md:h-64">
-        <Image
-          src={course.image}
-          alt={course.imageAlt}
-          fill
-          className="object-cover"
-        />
+        {course.image && (
+          <Image
+            src={
+              course.image.asset
+                ? urlFor(course.image).width(1920).height(500).url()
+                : course.image
+            }
+            alt={course.imageAlt || course.image?.alt || course.title}
+            fill
+            className="object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">
           <div className="flex flex-wrap gap-2 mb-2">
