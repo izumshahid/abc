@@ -4,15 +4,11 @@ import Link from "next/link";
 import { Button, Card, Tag } from "antd";
 import { GiftOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
-export default function PricingCTA() {
-  const comboFeatures = [
-    "Enroll in any tech course",
-    "Get 50% off on creative skills training",
-    "Flexible scheduling options",
-    "Both certifications included",
-    "Extended support period",
-    "Priority job placement assistance",
-  ];
+export default function PricingCTA({ banner }) {
+  // If no banner or banner is not active, don't render anything
+  if (!banner || !banner.isActive) {
+    return null;
+  }
 
   return (
     <section
@@ -39,9 +35,11 @@ export default function PricingCTA() {
                       color: "var(--secondary)",
                     }}
                   />
-                  <Tag color="red" className="text-base px-3 py-1">
-                    New Year Special
-                  </Tag>
+                  {banner.tagline && (
+                    <Tag color="red" className="text-base px-3 py-1">
+                      {banner.tagline}
+                    </Tag>
+                  )}
                 </div>
 
                 <h2
@@ -49,18 +47,15 @@ export default function PricingCTA() {
                   className="text-2xl md:text-3xl font-bold mb-4"
                   style={{ color: "var(--foreground)" }}
                 >
-                  Skill + Tech COMBO Offer
+                  {banner.title}
                 </h2>
 
                 <p className="mb-6" style={{ color: "var(--text-muted)" }}>
-                  Start {new Date().getFullYear()} with a powerful combination!
-                  Enroll in any technology course and unlock 50% off on our
-                  creative skills training. Build a diverse skill set and
-                  multiply your career opportunities.
+                  {banner.description}
                 </p>
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                  {comboFeatures.map((feature, index) => (
+                  {banner.features?.map((feature, index) => (
                     <li
                       key={index}
                       className="flex items-center gap-2"
@@ -75,7 +70,7 @@ export default function PricingCTA() {
                 </ul>
 
                 <div className="flex flex-wrap gap-4 mt-2">
-                  <Link href="/contact">
+                  <Link href={banner.primaryButtonLink || "/contact"}>
                     <Button
                       type="primary"
                       size="large"
@@ -88,10 +83,10 @@ export default function PricingCTA() {
                         paddingInline: "32px",
                       }}
                     >
-                      Claim This Offer
+                      {banner.primaryButtonText || "Claim This Offer"}
                     </Button>
                   </Link>
-                  <Link href="/#courses">
+                  <Link href={banner.secondaryButtonLink || "/#courses"}>
                     <Button
                       size="large"
                       style={{
@@ -103,7 +98,7 @@ export default function PricingCTA() {
                         paddingInline: "32px",
                       }}
                     >
-                      Browse Courses
+                      {banner.secondaryButtonText || "Browse Courses"}
                     </Button>
                   </Link>
                 </div>
@@ -115,24 +110,29 @@ export default function PricingCTA() {
                 style={{ backgroundColor: "var(--primary)" }}
               >
                 <div className="text-center text-white">
-                  <div className="text-6xl md:text-7xl font-bold mb-2">50%</div>
-                  <div className="text-xl">OFF</div>
-                  <div className="text-sm mt-2 opacity-80">
-                    on creative courses with any tech enrollment
+                  <div className="text-6xl md:text-7xl font-bold mb-2">
+                    {banner.discountPercentage}%
                   </div>
+                  <div className="text-xl">OFF</div>
+                  {banner.discountText && (
+                    <div className="text-sm mt-2 opacity-80">
+                      {banner.discountText}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Limited time notice */}
-          <p
-            className="text-center mt-4"
-            style={{ color: "var(--text-muted)" }}
-          >
-            Limited time offer. Valid for new admissions only. Terms and
-            conditions apply.
-          </p>
+          {banner.disclaimer && (
+            <p
+              className="text-center mt-4"
+              style={{ color: "var(--text-muted)" }}
+            >
+              {banner.disclaimer}
+            </p>
+          )}
         </div>
       </div>
     </section>

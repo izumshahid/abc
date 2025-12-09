@@ -55,7 +55,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
               What You&#39;ll Learn
             </h4>
             <List
-              dataSource={course.outcomes}
+              dataSource={course.outcomes || []}
               renderItem={(item) => (
                 <List.Item className="border-none py-1">
                   <CheckCircleOutlined
@@ -75,7 +75,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
               Prerequisites
             </h4>
             <List
-              dataSource={course.prerequisites}
+              dataSource={course.prerequisites || []}
               renderItem={(item) => (
                 <List.Item className="border-none py-1">
                   <span style={{ color: "var(--text-muted)" }}>
@@ -98,7 +98,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
       ),
       children: (
         <Timeline
-          items={course.syllabus.map((module) => ({
+          items={(course.syllabus || []).map((module) => ({
             color: "green",
             children: (
               <div className="pb-2">
@@ -112,7 +112,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
                   </span>
                 </div>
                 <ul className="pl-4 space-y-1">
-                  {module.topics.map((topic, i) => (
+                  {(module.topics || []).map((topic, i) => (
                     <li
                       key={i}
                       style={{ color: "var(--text-muted)" }}
@@ -139,7 +139,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
       children: (
         <div className="flex flex-col sm:flex-row items-start gap-4">
           <Avatar
-            src={course.instructor.image}
+            src={course.instructor?.image}
             size={100}
             icon={<UserOutlined />}
             className="shrink-0"
@@ -149,13 +149,13 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
               className="text-lg font-semibold"
               style={{ color: "var(--foreground)" }}
             >
-              {course.instructor.name}
+              {course.instructor?.name || "N/A"}
             </h4>
             <p className="text-sm mb-2" style={{ color: "var(--primary)" }}>
-              {course.instructor.title}
+              {course.instructor?.title || ""}
             </p>
             <p style={{ color: "var(--text-muted)" }}>
-              {course.instructor.bio}
+              {course.instructor?.bio || ""}
             </p>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default function CourseDetail({ course, visible, onClose, onEnroll }) {
             Upcoming Batches:{" "}
           </span>
           <span style={{ color: "var(--text-muted)" }} className="text-sm">
-            {course.startDates.join(" | ")}
+            {(course.startDates || []).join(" | ")}
           </span>
         </div>
       </div>

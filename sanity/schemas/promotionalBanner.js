@@ -1,0 +1,113 @@
+export default {
+  name: 'promotionalBanner',
+  title: 'Promotional Banner',
+  type: 'document',
+  fields: [
+    {
+      name: 'title',
+      title: 'Banner Title',
+      type: 'string',
+      description: 'Main heading of the promotional banner',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'string',
+      description: 'Small tag/label above the title (e.g., "New Year Special")',
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      description: 'Detailed description of the promotional offer',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'discountPercentage',
+      title: 'Discount Percentage',
+      type: 'number',
+      description: 'Discount percentage (e.g., 50 for 50% off)',
+      validation: (Rule) => Rule.required().min(0).max(100),
+    },
+    {
+      name: 'discountText',
+      title: 'Discount Text',
+      type: 'string',
+      description: 'Text to display below the discount percentage',
+      placeholder: 'on creative courses with any tech enrollment',
+    },
+    {
+      name: 'features',
+      title: 'Features',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of features/benefits included in this offer',
+      validation: (Rule) => Rule.required().min(1),
+    },
+    {
+      name: 'primaryButtonText',
+      title: 'Primary Button Text',
+      type: 'string',
+      description: 'Text for the main call-to-action button',
+      initialValue: 'Claim This Offer',
+    },
+    {
+      name: 'primaryButtonLink',
+      title: 'Primary Button Link',
+      type: 'string',
+      description: 'Link for the primary button',
+      initialValue: '/contact',
+    },
+    {
+      name: 'secondaryButtonText',
+      title: 'Secondary Button Text',
+      type: 'string',
+      description: 'Text for the secondary button',
+      initialValue: 'Browse Courses',
+    },
+    {
+      name: 'secondaryButtonLink',
+      title: 'Secondary Button Link',
+      type: 'string',
+      description: 'Link for the secondary button',
+      initialValue: '/#courses',
+    },
+    {
+      name: 'disclaimer',
+      title: 'Disclaimer',
+      type: 'text',
+      description: 'Small print disclaimer text at the bottom',
+      initialValue: 'Limited time offer. Valid for new admissions only. Terms and conditions apply.',
+    },
+    {
+      name: 'isActive',
+      title: 'Show Banner',
+      type: 'boolean',
+      description: 'Toggle to show or hide this promotional banner on the website',
+      initialValue: true,
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Order in which this banner appears (lower numbers appear first)',
+      initialValue: 0,
+    },
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      tagline: 'tagline',
+      discount: 'discountPercentage',
+      isActive: 'isActive',
+    },
+    prepare({ title, tagline, discount, isActive }) {
+      return {
+        title: title,
+        subtitle: `${tagline ? tagline + ' - ' : ''}${discount}% OFF ${isActive ? '(Active)' : '(Hidden)'}`,
+      };
+    },
+  },
+};

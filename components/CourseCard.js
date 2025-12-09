@@ -7,6 +7,7 @@ import {
   TrophyOutlined,
   StarFilled,
 } from '@ant-design/icons';
+import { urlFor } from '@/lib/sanity.client';
 
 export default function CourseCard({ course, onViewDetails }) {
   const formatPrice = (price) => {
@@ -31,13 +32,21 @@ export default function CourseCard({ course, onViewDetails }) {
       }}
       cover={
         <div className="relative h-48 overflow-hidden">
-          <Image
-            src={course.image}
-            alt={course.imageAlt}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          {course.image ? (
+            <Image
+              src={course.image.asset ? urlFor(course.image).width(800).height(400).url() : course.image}
+              alt={course.image.alt || course.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-[var(--primary)] to-[var(--primary-dark)] flex items-center justify-center">
+              <span className="text-white text-2xl font-bold opacity-20">
+                {course.title.charAt(0)}
+              </span>
+            </div>
+          )}
           {course.featured && (
             <div className="absolute top-3 left-3">
               <Tag
@@ -63,7 +72,7 @@ export default function CourseCard({ course, onViewDetails }) {
           <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
       }
-      bodyStyle={{ padding: '20px' }}
+      styles={{ body: { padding: '20px' } }}
     >
       <div className="flex flex-col h-full">
         {/* Category Tag */}
