@@ -120,47 +120,31 @@ export default function EnrollmentForm({
 
       <Form.Item
         name="name"
-        label={<span style={{ color: "var(--foreground)" }}>Full Name</span>}
+        label={<span style={{ color: "black" }}>Full Name</span>}
         rules={[
           { required: true, message: "Please enter your name" },
           { min: 2, message: "Name must be at least 2 characters" },
         ]}
         hasFeedback
       >
-        <Input
-          placeholder="Enter your full name"
-          size="large"
-          style={{
-            backgroundColor: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        />
+        <Input placeholder="Enter your full name" size="large" />
       </Form.Item>
 
       <Form.Item
         name="email"
-        label={
-          <span style={{ color: "var(--foreground)" }}>Email Address</span>
-        }
+        label={<span style={{ color: "black" }}>Email Address</span>}
         rules={[
           { required: true, message: "Please enter your email" },
           { type: "email", message: "Please enter a valid email" },
         ]}
         hasFeedback
       >
-        <Input
-          placeholder="Enter your email"
-          size="large"
-          style={{
-            backgroundColor: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        />
+        <Input placeholder="Enter your email" size="large" />
       </Form.Item>
 
       <Form.Item
         name="phone"
-        label={<span style={{ color: "var(--foreground)" }}>Phone Number</span>}
+        label={<span style={{ color: "black" }}>Phone Number</span>}
         rules={[
           { required: true, message: "Please enter your phone number" },
           {
@@ -170,21 +154,12 @@ export default function EnrollmentForm({
         ]}
         hasFeedback
       >
-        <Input
-          placeholder="Enter your phone number"
-          size="large"
-          style={{
-            backgroundColor: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        />
+        <Input placeholder="Enter your phone number" size="large" />
       </Form.Item>
 
       <Form.Item
         name="courses"
-        label={
-          <span style={{ color: "var(--foreground)" }}>Select Course(s)</span>
-        }
+        label={<span style={{ color: "black" }}>Select Course(s)</span>}
         rules={[
           {
             required: true,
@@ -212,19 +187,11 @@ export default function EnrollmentForm({
 
       <Form.Item
         name="startDate"
-        label={
-          <span style={{ color: "var(--foreground)" }}>
-            Preferred Start Date
-          </span>
-        }
+        label={<span style={{ color: "black" }}>Preferred Start Date</span>}
       >
         <DatePicker
           size="large"
-          style={{
-            width: "100%",
-            backgroundColor: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
+          style={{ width: "100%" }}
           placeholder="Select preferred start date"
           format="DD/MM/YYYY"
         />
@@ -232,17 +199,11 @@ export default function EnrollmentForm({
 
       <Form.Item
         name="message"
-        label={
-          <span style={{ color: "var(--foreground)" }}>Message (Optional)</span>
-        }
+        label={<span style={{ color: "black" }}>Message (Optional)</span>}
       >
         <TextArea
           rows={4}
           placeholder="Any questions or specific requirements?"
-          style={{
-            backgroundColor: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
         />
       </Form.Item>
 
@@ -275,12 +236,10 @@ export default function EnrollmentForm({
     <Result
       status="success"
       title={
-        <span style={{ color: "var(--foreground)" }}>
-          Enrollment Inquiry Submitted!
-        </span>
+        <span style={{ color: "black" }}>Enrollment Inquiry Submitted!</span>
       }
       subTitle={
-        <span style={{ color: "var(--foreground)" }}>
+        <span style={{ color: "black" }}>
           Thank you for your interest in ABC Computronics. Our team will contact
           you within 24 hours to discuss your enrollment.
         </span>
@@ -311,7 +270,7 @@ export default function EnrollmentForm({
         width={600}
         title={
           !success && (
-            <span style={{ color: "var(--foreground)" }}>
+            <span style={{ color: "black" }}>
               {preSelectedCourse
                 ? `Enroll in ${preSelectedCourse.title}`
                 : "Course Enrollment"}

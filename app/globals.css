@@ -219,6 +219,60 @@ p {
   font-weight: 600 !important;
 }
 
+/* Form inputs dark mode styling */
+[data-theme="dark"] .ant-input,
+[data-theme="dark"] .ant-input-affix-wrapper,
+[data-theme="dark"] .ant-select-selector,
+[data-theme="dark"] .ant-picker,
+[data-theme="dark"] .ant-input-textarea-show-count::after {
+  background-color: #2a3d35 !important;
+  border-color: #3d5a4d !important;
+  color: var(--foreground) !important;
+}
+
+[data-theme="dark"] .ant-input::placeholder,
+[data-theme="dark"] .ant-select-selection-placeholder,
+[data-theme="dark"] .ant-picker-input input::placeholder {
+  color: #9ca3af !important;
+  opacity: 0.7 !important;
+}
+
+[data-theme="dark"] .ant-select-selection-item {
+  color: var(--foreground) !important;
+  background-color: var(--primary) !important;
+}
+
+[data-theme="dark"] .ant-form-item-label > label {
+  color: var(--foreground) !important;
+}
+
+[data-theme="dark"] .ant-form-item-required::before {
+  color: #ff6b6b !important;
+}
+
+/* Light mode form improvements */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker {
+  transition: all 0.3s ease !important;
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+  border-color: var(--primary) !important;
+}
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(45, 106, 90, 0.1) !important;
+}
+
 /* Swiper customization */
 .swiper-pagination-bullet {
   background-color: var(--secondary) !important;
