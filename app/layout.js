@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import { getAllCourses, getSiteConfig } from "@/lib/sanity.queries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,7 +83,13 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // Fetch data for Footer
+  const [courses, siteConfig] = await Promise.all([
+    getAllCourses(),
+    getSiteConfig(),
+  ]);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -121,7 +128,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AntdRegistry>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout courses={courses} siteConfig={siteConfig}>
+            {children}
+          </ClientLayout>
         </AntdRegistry>
       </body>
     </html>

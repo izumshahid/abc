@@ -1,8 +1,6 @@
 'use client';
 
-import { siteConfig } from '@/data/siteConfig';
-
-export default function HowItWorks() {
+export default function HowItWorks({ steps = [] }) {
   return (
     <section
       className="section"
@@ -32,13 +30,13 @@ export default function HowItWorks() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {siteConfig.howItWorks.map((step, index) => (
+          {steps.map((step, index) => (
             <div
               key={index}
               className="relative text-center"
             >
               {/* Connector line for desktop */}
-              {index < siteConfig.howItWorks.length - 1 && (
+              {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-10 left-1/2 w-full h-0.5 bg-[var(--primary)]" />
               )}
 

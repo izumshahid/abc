@@ -7,7 +7,6 @@ import {
   SolutionOutlined,
   ScheduleOutlined,
 } from '@ant-design/icons';
-import { siteConfig } from '@/data/siteConfig';
 
 const iconMap = {
   team: <TeamOutlined style={{ fontSize: 32 }} />,
@@ -16,7 +15,7 @@ const iconMap = {
   schedule: <ScheduleOutlined style={{ fontSize: 32 }} />,
 };
 
-export default function Features() {
+export default function Features({ features = [] }) {
   return (
     <section
       className="section"
@@ -50,7 +49,7 @@ export default function Features() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {siteConfig.features.map((feature, index) => (
+          {features.map((feature, index) => (
             <Card
               key={index}
               className="text-center hover:shadow-lg transition-shadow"

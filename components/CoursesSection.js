@@ -7,9 +7,14 @@ import { AppstoreOutlined, CodeOutlined, HighlightOutlined } from '@ant-design/i
 import CourseCard from './CourseCard';
 import CourseDetail from './CourseDetail';
 import EnrollmentForm from './EnrollmentForm';
-import { courses, courseCategories } from '@/data/courses';
 
-export default function CoursesSection() {
+const courseCategories = [
+  { id: 'all', name: 'All Courses', icon: 'appstore' },
+  { id: 'technology', name: 'Technology', icon: 'code' },
+  { id: 'creative', name: 'Creative Skills', icon: 'highlight' },
+];
+
+export default function CoursesSection({ courses = [] }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [showEnrollment, setShowEnrollment] = useState(false);

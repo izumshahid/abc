@@ -26,17 +26,17 @@ const antdTheme = {
   },
 };
 
-export default function ClientLayout({ children }) {
+export default function ClientLayout({ children, courses, siteConfig }) {
   return (
     <ThemeProvider>
       <ConfigProvider theme={antdTheme}>
         <App>
-          <StructuredData type="organization" />
+          <StructuredData type="organization" siteConfig={siteConfig} />
           <Header />
           <main id="main-content" className="min-h-screen">
             {children}
           </main>
-          <Footer />
+          <Footer courses={courses} siteConfig={siteConfig} />
         </App>
       </ConfigProvider>
     </ThemeProvider>

@@ -7,14 +7,14 @@ import { Button } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-import { heroSlides } from "@/data/siteConfig";
+import { urlFor } from "@/lib/sanity.client";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 
-export default function HeroCarousel() {
+export default function HeroCarousel({ slides = [] }) {
   const swiperRef = useRef(null);
 
   const handlePrev = useCallback(() => {
@@ -53,19 +53,21 @@ export default function HeroCarousel() {
           paginationBulletMessage: "Go to slide {{index}}",
         }}
       >
-        {heroSlides.map((slide) => (
-          <SwiperSlide key={slide.id}>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={slide._id}>
             <div className="relative h-full w-full">
               {/* Background Image */}
-              <Image
-                src={slide.image}
-                alt={slide.imageAlt}
-                fill
-                priority={slide.id === 1}
-                className="object-cover"
-                sizes="100vw"
-                quality={85}
-              />
+              {slide.image && (
+                <Image
+                  src={urlFor(slide.image).width(1920).url()}
+                  alt={slide.image.alt || slide.title}
+                  fill
+                  priority={index === 0}
+                  className="object-cover"
+                  sizes="100vw"
+                  quality={85}
+                />
+              )}
               {/* Overlay */}
               <div
                 className="absolute inset-0"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -11,7 +11,6 @@ import {
   Modal,
   Result,
 } from "antd";
-import { courses } from "@/data/courses";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -20,6 +19,7 @@ export default function EnrollmentForm({
   preSelectedCourse,
   visible,
   onClose,
+  courses = [],
 }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -100,7 +100,7 @@ export default function EnrollmentForm({
         message.error("Please fill in all required fields correctly");
       }}
       initialValues={{
-        courses: preSelectedCourse?.id ? [preSelectedCourse.id] : [],
+        courses: preSelectedCourse?._id ? [preSelectedCourse._id] : [],
       }}
       className="max-w-lg mx-auto"
       validateTrigger={["onChange", "onBlur"]}
@@ -157,33 +157,35 @@ export default function EnrollmentForm({
         <Input placeholder="Enter your phone number" size="large" />
       </Form.Item>
 
-      <Form.Item
-        name="courses"
-        label={<span style={{ color: "black" }}>Select Course(s)</span>}
-        rules={[
-          {
-            required: true,
-            type: "array",
-            min: 1,
-            message: "Please select at least one course",
-          },
-        ]}
-        hasFeedback
-      >
-        <Select
-          mode="multiple"
-          placeholder="Choose one or more courses"
-          size="large"
-          style={{ width: "100%" }}
-          maxTagCount="responsive"
+      {!preSelectedCourse && (
+        <Form.Item
+          name="courses"
+          label={<span style={{ color: "black" }}>Select Course(s)</span>}
+          rules={[
+            {
+              required: true,
+              type: "array",
+              min: 1,
+              message: "Please select at least one course",
+            },
+          ]}
+          hasFeedback
         >
-          {courses.map((course) => (
-            <Option key={course.id} value={course.id}>
-              {course.title}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+          <Select
+            mode="multiple"
+            placeholder="Choose one or more courses"
+            size="large"
+            style={{ width: "100%" }}
+            maxTagCount="responsive"
+          >
+            {courses.map((course) => (
+              <Option key={course._id} value={course._id}>
+                {course.title}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      )}
 
       <Form.Item
         name="startDate"

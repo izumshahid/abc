@@ -4,12 +4,12 @@ import { Card, Avatar, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { testimonials } from '@/data/testimonials';
+import { urlFor } from '@/lib/sanity.client';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials = [] }) {
   return (
     <section
       id="testimonials"
@@ -60,7 +60,7 @@ export default function Testimonials() {
           className="pb-12"
         >
           {testimonials.map((testimonial) => (
-            <SwiperSlide key={testimonial.id}>
+            <SwiperSlide key={testimonial._id}>
               <Card
                 className="h-full"
                 style={{
@@ -82,7 +82,7 @@ export default function Testimonials() {
                   </p>
                   <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: 'var(--card-border)' }}>
                     <Avatar
-                      src={testimonial.avatar}
+                      src={testimonial.avatar ? urlFor(testimonial.avatar).width(100).url() : null}
                       size={50}
                       icon={<UserOutlined />}
                     />

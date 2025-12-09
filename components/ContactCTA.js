@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { Button } from 'antd';
 import { PhoneOutlined, WhatsAppOutlined } from '@ant-design/icons';
-import { siteConfig } from '@/data/siteConfig';
 
-export default function ContactCTA() {
+export default function ContactCTA({ siteConfig }) {
+  if (!siteConfig) return null;
+
   return (
     <section
       className="section"
@@ -39,7 +40,7 @@ export default function ContactCTA() {
               Enroll Now
             </Button>
           </Link>
-          <a href={`tel:${siteConfig.contact.phone}`}>
+          <a href={`tel:${siteConfig.contact?.phone}`}>
             <Button
               size="large"
               icon={<PhoneOutlined />}
@@ -55,7 +56,7 @@ export default function ContactCTA() {
             </Button>
           </a>
           <a
-            href={siteConfig.social.whatsapp}
+            href={siteConfig.social?.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
           >

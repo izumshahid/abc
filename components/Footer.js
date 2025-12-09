@@ -12,44 +12,44 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { siteConfig } from "@/data/siteConfig";
-import { courses } from "@/data/courses";
 
-export default function Footer() {
+export default function Footer({ courses = [], siteConfig = null }) {
   const techCourses = courses
     .filter((c) => c.category === "technology")
     .slice(0, 4);
   const currentYear = new Date().getFullYear();
 
+  if (!siteConfig) return null;
+
   const socialLinks = [
     {
       icon: <FacebookOutlined />,
-      href: siteConfig.social.facebook,
+      href: siteConfig.social?.facebook,
       label: "Facebook",
     },
     {
       icon: <InstagramOutlined />,
-      href: siteConfig.social.instagram,
+      href: siteConfig.social?.instagram,
       label: "Instagram",
     },
     {
       icon: <TwitterOutlined />,
-      href: siteConfig.social.twitter,
+      href: siteConfig.social?.twitter,
       label: "Twitter",
     },
     {
       icon: <LinkedinOutlined />,
-      href: siteConfig.social.linkedin,
+      href: siteConfig.social?.linkedin,
       label: "LinkedIn",
     },
     {
       icon: <YoutubeOutlined />,
-      href: siteConfig.social.youtube,
+      href: siteConfig.social?.youtube,
       label: "YouTube",
     },
     {
       icon: <WhatsAppOutlined />,
-      href: siteConfig.social.whatsapp,
+      href: siteConfig.social?.whatsapp,
       label: "WhatsApp",
     },
   ];
@@ -123,7 +123,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               {techCourses.map((course) => (
-                <li key={course.id}>
+                <li key={course._id}>
                   <Link
                     href={`/courses/${course.slug}`}
                     className="!text-white hover:text-[var(--secondary)] transition-colors"

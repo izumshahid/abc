@@ -1,7 +1,10 @@
-import { courses } from '@/data/courses';
+import { getAllCourses } from '@/lib/sanity.queries';
 
-export default function sitemap() {
+export default async function sitemap() {
   const baseUrl = 'https://abccomputronics.com';
+
+  // Fetch courses from Sanity
+  const courses = await getAllCourses();
 
   // Static pages
   const staticPages = [

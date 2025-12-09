@@ -1,8 +1,8 @@
 'use client';
 
-import { siteConfig } from '@/data/siteConfig';
+export function generateStructuredData(type, data, siteConfig) {
+  if (!siteConfig) return null;
 
-export function generateStructuredData(type, data) {
   const baseOrg = {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
@@ -20,17 +20,17 @@ export function generateStructuredData(type, data) {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: siteConfig.contact.phone,
+      telephone: siteConfig.contact?.phone,
       contactType: 'customer service',
-      email: siteConfig.contact.email,
+      email: siteConfig.contact?.email,
     },
     sameAs: [
-      siteConfig.social.facebook,
-      siteConfig.social.instagram,
-      siteConfig.social.twitter,
-      siteConfig.social.linkedin,
-      siteConfig.social.youtube,
-    ],
+      siteConfig.social?.facebook,
+      siteConfig.social?.instagram,
+      siteConfig.social?.twitter,
+      siteConfig.social?.linkedin,
+      siteConfig.social?.youtube,
+    ].filter(Boolean),
   };
 
   if (type === 'organization') {
@@ -48,7 +48,7 @@ export function generateStructuredData(type, data) {
         name: siteConfig.name,
         sameAs: siteConfig.url,
       },
-      courseCode: data.id,
+      courseCode: data._id,
       hasCourseInstance: {
         '@type': 'CourseInstance',
         courseMode: 'onsite',
@@ -71,8 +71,10 @@ export function generateStructuredData(type, data) {
   return baseOrg;
 }
 
-export function StructuredData({ type, data }) {
-  const structuredData = generateStructuredData(type, data);
+export function StructuredData({ type, data, siteConfig }) {
+  if (!siteConfig) return null;
+
+  const structuredData = generateStructuredData(type, data, siteConfig);
 
   return (
     <script
